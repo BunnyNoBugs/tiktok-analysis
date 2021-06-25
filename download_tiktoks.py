@@ -6,7 +6,9 @@ api = TikTokApi.get_instance()
 
 count = 1800
 
-tiktoks = api.by_hashtag('popit', count=count)
+query = 'ghosthoney'
 
-with open('data/#popit.json', 'w') as f:
+tiktoks = api.by_username(query, count=count)
+
+with open(f'data/user_{query}.json', 'w') as f:
     json.dump(tiktoks, f)
