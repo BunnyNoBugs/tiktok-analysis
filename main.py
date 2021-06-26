@@ -91,12 +91,16 @@ def callback_inline(call):
             with open(path_to_plot, 'rb') as f:
                 plot = f.read()
             bot.send_photo(chat_id=call.message.chat.id, photo=plot)
+            pass
+        pass
 
     elif call.data == "desc":
         try:
             bot.send_message(chat_id=call.message.chat.id, text=tiktok_info[0]['desc'])
+            pass
         except IndexError:
             bot.send_message(chat_id=call.message.chat.id, text="Нет описания")
+        pass
 
 
 if __name__ == '__main__':
