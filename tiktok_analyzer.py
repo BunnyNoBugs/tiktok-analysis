@@ -56,7 +56,7 @@ class TikTokAnalyzer:
 
         return pred
 
-    def plot_likes_prediction(self, pred):
+    def plot_likes_prediction(self, pred, path: str = 'tmp/prediction.png'):
         pred = pred[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
         pred = pred.rename(columns={'yhat': 'prediction', 'yhat_lower': 'prediction_5', 'yhat_upper': 'prediction_95'})
 
@@ -67,7 +67,9 @@ class TikTokAnalyzer:
                 date_col='ds',
                 actual_col='likes',
                 insample_line=True,
-                title=f'Average likes count per day prediction for TikTok user @{self.username}'
+                title=f'Average likes count per day prediction for TikTok user @{self.username}',
+                is_visible=False,
+                path=path
             )
         else:
             plot_predicted_data(
@@ -76,7 +78,9 @@ class TikTokAnalyzer:
                 date_col='ds',
                 actual_col='likes',
                 insample_line=True,
-                title=f'Average TikTok likes count per day prediction'
+                title=f'Average TikTok likes count per day prediction',
+                is_visible=False,
+                path=path
             )
 
 
