@@ -3,6 +3,7 @@ from telebot import types
 import conf
 import tiktok_api
 from tiktok_analyzer import TikTokAnalyzer
+import random
 
 bot = telebot.TeleBot(conf.TOKEN, threaded=False)
 tiktok_info = True
@@ -96,7 +97,9 @@ def callback_inline(call):
 
     elif call.data == "desc":
         try:
-            bot.send_message(chat_id=call.message.chat.id, text=tiktok_info[0]['desc'])
+            random_tiktok = random.choice(tiktok_info)
+            bot.send_message(chat_id=call.message.chat.id,
+                             text=f"{random_tiktok['desc']}\nКоличество лайков: {random_tiktok['stats']['diggCount']}")
             pass
         except IndexError:
             bot.send_message(chat_id=call.message.chat.id, text="Нет описания")
