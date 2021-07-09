@@ -1,0 +1,22 @@
+{d0 -> d12 [label="1", color="green4"] ; 
+d0 -> d13 [label="6", color="red2"] ; 
+d12 -> d23 [label="3", color="red2"] ; 
+d12 -> d24 [label="4", color="red2"] ; 
+d13 -> d25 [label="4", color="red2"] ; 
+d13 -> d26 [label="2", color="red2"] ; 
+d23 -> done3 [label="1", color="green4"] ; 
+d24 -> done4 [label="1", color="green4"] ; 
+d25 -> done5 [label="1", color="red2"] ; 
+d26 -> done6 [label="1", color="red2"] ; 
+d0 [label=<el<SUB>1</SUB> &lt; el<SUB>0</SUB> ?>] 
+d12 [label=<el<SUB>2</SUB> &lt; el<SUB>3</SUB> ?>] 
+d13 [label=<el<SUB>1</SUB> &lt; el<SUB>1</SUB> ?>] 
+d23 [label=<el<SUB>0</SUB> &lt; el<SUB>3</SUB> ?>] 
+d24 [label=<el<SUB>1</SUB> &lt; el<SUB>2</SUB> ?>] 
+d25 [label=<el<SUB>0</SUB> &lt; el<SUB>3</SUB> ?>] 
+d26 [label=<el<SUB>2</SUB> &lt; el<SUB>1</SUB> ?>] 
+done3 [label=done] 
+done4 [label=done] 
+done5 [label=done] 
+done6 [label=done] 
+}
