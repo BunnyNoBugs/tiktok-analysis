@@ -1,11 +1,14 @@
 import telebot
 from telebot import types
-import conf
-import tiktok_api
+import tiktoks_downloader
 from tiktok_analyzer import TikTokAnalyzer
 import random
+from flask import Flask, request
+import os
 
-bot = telebot.TeleBot(conf.TOKEN, threaded=False)
+TOKEN = os.environ["TOKEN_TT"]
+server = Flask(__name__)
+bot = telebot.TeleBot(TOKEN, threaded=False)
 tiktok_info = True
 tiktok_username = None
 
@@ -58,10 +61,9 @@ def callback_inline(call):
         def send_text(message):
             global tiktok_info
             bot.send_message(message.chat.id, 'getting')
-            tiktok_info = tiktok_api.get_tiktoks(message.text)
+            tiktok_info = tiktoks_downloader.get_tiktoks(message.text)
             global tiktok_username
             tiktok_username = message.text
-            # tiktok_info = 'asdasdasda'
             keyboard2 = types.InlineKeyboardMarkup(row_width=8)
             backbutton2 = types.InlineKeyboardButton(text="Назад в меню", callback_data="mainmenu")
             keyboard2.add(backbutton2)
@@ -72,11 +74,6 @@ def callback_inline(call):
             bot.send_message(message.chat.id,
                              "done",
                              reply_markup=keyboard2)
-            # return tiktok_info
-            # @bot.callback_query_handler(func=lambda call1: True)
-            # def callback_inline1(call1):
-            #    print('111')
-            #    print(call.data)
 
         pass
 
@@ -106,5 +103,20 @@ def callback_inline(call):
         pass
 
 
-if __name__ == '__main__':
-    bot.polling()
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    json_string = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://horo-bot.herokuapp.com/' + TOKEN)
+    return "!", 200
+
+
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
